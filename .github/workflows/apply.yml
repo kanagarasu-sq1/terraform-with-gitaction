@@ -1,4 +1,3 @@
-```yaml
 name: Terraform AWS Infrastructure
 
 on:
@@ -101,4 +100,3 @@ jobs:
       - name: Terraform Apply
         working-directory: ./vpc
         run: terraform apply -auto-approve tfplan
-```
