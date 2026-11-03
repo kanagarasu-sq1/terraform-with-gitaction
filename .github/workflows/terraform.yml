@@ -69,7 +69,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::704475326985:role/GitHubTerraformDeployRole
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ap-south-1
+          #aws-region: ${{ env.AWS_REGION }}
           role-session-name: GitHubActionsTerraform
 
       - name: Verify AWS Identity
