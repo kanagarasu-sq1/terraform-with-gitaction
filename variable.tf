@@ -10,10 +10,10 @@ variable "vpc_name" {
 
 variable "vpc_cidr" {
   type    = string
-  default = "17.20.0.0/16"
+  default = "10.20.0.0/16"
 }
 
 variable "environment" {
   type    = string
-  default = "dev"
+  default = "staging"
 }
