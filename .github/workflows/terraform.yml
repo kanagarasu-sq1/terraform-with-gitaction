@@ -1,4 +1,4 @@
-```yaml
+
 name: Terraform AWS Infrastructure
 
 on:
@@ -93,4 +93,4 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
-```
+
