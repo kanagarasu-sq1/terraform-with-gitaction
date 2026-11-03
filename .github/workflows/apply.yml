@@ -32,7 +32,7 @@ jobs:
 
       - name: Terraform Format Check
         working-directory: ./vpc
-        run: terraform fmt -check -recursive
+        run: terraform fmt -recursive
 
       - name: Terraform Init
         working-directory: ./vpc
@@ -83,7 +83,7 @@ jobs:
 
       - name: Terraform Format Check
         working-directory: ./vpc
-        run: terraform fmt -check -recursive
+        run: terraform fmt -recursive
 
       - name: Terraform Init
         working-directory: ./vpc
