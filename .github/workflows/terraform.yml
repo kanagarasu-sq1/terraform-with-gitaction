@@ -1,4 +1,4 @@
-
+```yaml
 name: Terraform AWS Infrastructure
 
 on:
@@ -25,13 +25,13 @@ jobs:
     if: github.event_name == 'pull_request'
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Format
+      - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
       - name: Terraform Init
@@ -44,7 +44,6 @@ jobs:
     name: Terraform Plan and Apply
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-
     environment: production
 
     concurrency:
@@ -52,31 +51,35 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Show OIDC Identity Details
-        run: |
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Repository ID: ${{ github.repository_id }}"
-          echo "Owner ID: ${{ github.repository_owner_id }}"
-          echo "Ref: $GITHUB_REF"
+      - name: Inspect GitHub OIDC claims
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const token = await core.getIDToken('sts.amazonaws.com');
+            const payload = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64url').toString()
+            );
+            core.info(`OIDC issuer: ${payload.iss}`);
+            core.info(`OIDC audience: ${payload.aud}`);
+            core.info(`OIDC subject: ${payload.sub}`);
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::704475326985:role/GitHubTerraformDeployRole
-          aws-region: ap-south-1
-          #aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
           role-session-name: GitHubActionsTerraform
 
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
 
-      - name: Terraform Format
+      - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
       - name: Terraform Init
@@ -90,3 +93,4 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
+```
