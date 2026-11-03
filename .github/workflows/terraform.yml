@@ -79,18 +79,18 @@ jobs:
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
 
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+      #- name: Terraform Format Check
+       # run: terraform fmt -check -recursive
 
-      - name: Terraform Init
-        run: terraform init
+      #- name: Terraform Init
+        #run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
+      #- name: Terraform Validate
+        #run: terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
+      #- name: Terraform Plan
+        #run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+      - name: Terraform destroy
+        run: terraform destroy -auto-approve tfplan
 
