@@ -1,3 +1,4 @@
+
 terraform {
   required_version = ">= 1.10.0"
 
@@ -31,4 +32,9 @@ resource "aws_vpc" "main" {
     Environment = var.environment
     ManagedBy   = "Terraform"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
+
